@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang = "ja">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+        <title>RCJ Scoring System</title>
+
+        <link rel = "stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+        <link rel = "stylesheet" type = "text/css" href = "./RCJScoringSystem.css">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500&family=Noto+Sans+JP&family=Courier+Prime&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <header>
+            <div class = "settings">
+                <dialog id="dialog">
+                    <div class = timerSettings>
+                        <div class="timerSetting" id = gameTimerSetting>
+                            <p>前後半</p>
+                            <input type = number id = gameTimerSettingMin min = 0 value = "10">m&nbsp;
+                            <input type = number id = gameTimerSettingSec min = 0 max = 59 value = "0">s
+                        </div>
+                        <div class="timerSetting" id = halfTimerSetting>
+                            <p>ハーフタイム</p>
+                            <input type = number id = halfTimerSettingMin min = 0 value="5">m&nbsp;
+                            <input type = number id = halfTimerSettingSec min = 0 max = 59 value="0">s
+                        </div>
+                        <div class="timerSetting" id = robotTimerSetting>
+                            <p>故障時間</p>
+                            <input type = number id = robotTimerSettingMin min = 0 value = "1">m&nbsp;
+                            <input type = number id = robotTimerSettingSec min = 0 max = 59 value = "0">s
+                        </div>
+                        <div id = blueTeamSetting>
+                            <p>青チーム名</p>
+                            <input type="text" id="blueTeam" value="Blue Side">
+                        </div>
+                        <div id = yellowTeamSetting>
+                            <p>黄色チーム名</p>
+                            <input type="text" id="yellowTeam" value="Yellow Side">
+                        </div>
+                    </div>
+                    <button id = settingClose><i class="fa-solid fa-xmark"></i></button>
+                </dialog>
+                <button id="settingOpen"><i id = settings class="fa-sharp fa-solid fa-gear"></i></button>
+            </div>
+
+            <div class = "startTime">
+                <p id = startTime>ver 0.1.0</p>
+            </div>
+
+            <div class = "title">
+                <p>RCJ Soccer Timer Set&emsp;|&emsp;@nearfactory</p>
+            </div>
+            
+            <div class = "clock">
+                <div class="clock-date"></div>
+                <div class="clock-time"></div>
+            </div>
+        </header>
+
+        <main>
+            <div class = "left">
+                <div class = "upper">
+                    <div class = "teamNames">
+                        <p id = "teamNames-left">Blue Side</p>
+
+                        <p id="teamNames-middle">VS</p>
+
+                        <p id = "teamNames-right">Yellow Side</p>
+                    </div>
+                </div>
+
+                <div class = "middle">
+                    <div class = "scores">
+                        <p id = "leftScore">00</p>
+
+                        <div id = "scores-middle">
+                            <div id = half>
+                                <p id = halfName>前半</p>
+                            </div>
+                            <div id = timer-main>
+                                <p id = gameTimer></p>
+                            </div>
+                            
+                            <div class = buttons>
+                                <div id = start>
+                                    <i class="fa-sharp fa-solid fa-play"></i>
+                                </div>
+                                <div id = stop>
+                                    <i class="fa-sharp fa-solid fa-pause"></i>
+                                </div>
+                                <div id = reset>
+                                    <i class="fa-sharp fa-solid fa-arrows-rotate"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p id = "rightScore">00</p>
+                    </div>
+                </div>
+
+                <div class = "bottom">
+                    <div class = "scoreManage">
+                        <div id = "scoreManage-left">
+                            <div id = "scoreMinusLeft">
+                                <p>-1</p>
+                            </div>
+
+                            <div id = "scorePlusLeft">
+                                <p>+1</p>
+                            </div>
+                        </div>
+                        
+                        <div id = "scoreManage-middle"></div>
+
+                        <div id = "scoreManage-right">
+                            <div id = "scoreMinusRight">
+                                <p>-1</p>
+                            </div>
+
+                            <div id = "scorePlusRight">
+                                <p>+1</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "right">
+                <div class="element">
+                    <div id="t1Number" class = number>1</div>
+                    <div id="t1" class="display"></div>
+                    <button id="timer1" class="start-btn"><i class="fa-solid fa-play"></i></button>
+                    <button id="timer1-re" class="reset-btn"><i class="fa-solid fa-rotate-left"></i></button>
+                </div>
+
+                <div class="element">
+                    <div id="t2Number" class = number>2</div>
+                    <div id="t2" class="display"></div>
+                    <button id="timer2" class="start-btn"><i class="fa-solid fa-play"></i></button>
+                    <button id="timer2-re" class="reset-btn"><i class="fa-solid fa-rotate-left"></i></button>
+                </div>
+
+                <div class="element">
+                    <div id="t3Number" class = number>3</div>
+                    <div id="t3" class="display"></div>
+                    <button id="timer3" class="start-btn"><i class="fa-solid fa-play"></i></button>
+                    <button id="timer3-re" class="reset-btn"><i class="fa-solid fa-rotate-left"></i></button>
+                    
+                </div>
+
+                <div class="element">
+                    <div id="t4Number" class = number>4</div>
+                    <div id="t4" class="display"></div>
+                    <button id="timer4" class="start-btn"><i class="fa-solid fa-play"></i></button>
+                    <button id="timer4-re" class="reset-btn"><i class="fa-solid fa-rotate-left"></i></button>
+                    
+                </div>
+
+                <div class = element>
+                    <button id = "allreset">All Reset</button>
+                </div>
+            </div>
+        </main>
+
+        <script src="https://kit.fontawesome.com/2cd68e5bc6.js" crossorigin="anonymous"></script>
+        <script src = "https://code.jquery.com/jquery-3.4.1.min.js" integrity = "sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin = "anonymous"></script>
+        <script src = "./RCJScoringSystem.js"></script>
+
+    </body>
+</html>

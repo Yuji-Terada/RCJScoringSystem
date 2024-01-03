@@ -65,7 +65,6 @@ header{
     
     color: #555555;
     font-size: 3.5rem;
-    line-height: 10rem;
     text-align: center;
 }
 
@@ -691,7 +690,9 @@ main{
     padding: 0;
 
     display: grid;
-    grid-template: 1fr / 0.5fr 1.5fr 0.75fr 0.75fr;
+    grid-template:
+        "num time start reset" 1fr
+        / 0.5fr 1.5fr 0.75fr 0.75fr;
 }
 
 .num{
@@ -702,6 +703,8 @@ main{
     padding: 0;
 
     display: flex;
+
+    grid-area: num;
 }
 
 .num p{
@@ -731,6 +734,8 @@ main{
     padding: 0;
 
     display: flex;
+
+    grid-area: time;
 }
 
 .time p{
@@ -760,6 +765,8 @@ main{
     margin: 0;
     padding: 0;
 
+    grid-area: start;
+
     background-color: #ffffff;
 
     border: none;
@@ -774,6 +781,8 @@ main{
 
     margin: 0;
     padding: 0;
+
+    grid-area: reset;
 
     background-color: #ffffff;
 
@@ -819,3 +828,89 @@ main{
 }
 
 /* ======================================== */
+
+@media screen and (max-width: 1280px) {
+    html{
+        width: 100dvw;
+        height: 100dvh;
+
+        color: #000;
+        font-size: 6px;
+    }
+
+    body{
+        grid-template: 
+            "header" 14rem
+            "main" 1fr
+            / 1fr;
+    }
+    header{
+        grid-template:
+            "settings title version" 4fr
+            "clock clock clock" 3fr
+            / 8rem 4.5fr 1.5fr;
+    }
+
+    main{
+        grid-template: 
+        "blueTeam vs yellowTeam" 1fr
+        "blueScore now yellowScore" 1fr
+        "blueScore gameTimer yellowScore" 1fr
+        "blueScore gameTimerEdit yellowScore" 1fr
+        "blueScoreEdit middle yellowScoreEdit" 0.75fr
+        "timer1 timerReset timer2" 0.75fr
+        "timer3 timerReset timer4" 0.75fr
+        / 2fr 1fr 2fr ;
+    }
+    
+    #version{
+        font-size: 2.5rem;
+        line-height: 8rem;
+    }
+    
+    #title{
+        font-size: 2.5rem;
+        line-height: 8rem;
+    }
+    
+    #clockDate{
+        font-size: 2rem;
+        line-height: 6rem;
+    }
+    
+    #clockTime{
+        font-size: 2rem;
+        line-height: 6rem;
+    }
+
+    #teamNameBlue, #teamNameYellow, #vs{
+        font-size: 3.5rem;
+    }
+
+    #gameTimer{
+        font-size: 4.5rem;
+    }
+
+    #blueScore, #yellowScore{
+        font-size: 20rem;
+    }
+
+    #allReset{
+        font-size: 2.5rem;
+    }
+
+    #allReset:active{
+        background-color: #f0f0f0;
+    }
+    
+    .timer{
+        grid-template:
+            "num time start" 1fr
+            "num time reset" 1fr
+            / 0.5fr 1.5fr 0.75fr;
+    }
+
+    #settingOpen:hover, #settingClose:hover, #gameTimerEdit button:hover, #blueScoreEdit button:hover, #yellowScoreEdit button:hover, #allReset:hover{
+        background-color: #ffffff;
+    }
+}

@@ -1,914 +1,821 @@
 @charset "utf-8";
 
-html, body{
-    top: 0;
-    left: 0;
-
-    margin-top: 1vh;
-    margin-left: 0.5vw;
+html{
+    margin: 0;
     padding: 0;
 
-    width: 98vw;
-    height: 96vh;
+    width: 100%;
+    height: 100vh;
 
     background-color: #eff8fa;
 
-    font-family: Barlow, Noto Sans JP, Courier Prime sans-serif;
+    font-family: Barlow, Noto Sans JP, sans-serif;
     font-size: 10px;
 }
 
+body{
+    width: calc(100% - 2rem);
+    height: calc(100% - 2rem);
 
+    margin: 1rem;
 
+    display: grid;
+    grid-template: 
+        "header" 10rem
+        "main" 1fr
+        / 1fr;
+}
 
-
-
-
-
-
+/* ======================================== */
 
 header{
     width: 100%;
-    height: 12.5%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-
-    background-color: #b6eaff;
-}
-
-header .settings{
-    width: 7.5%;
     height: 100%;
 
-    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
 
-    border-right: #aaaaaa 1px solid;
+    grid-area: header;
+    display: grid;
+    grid-template:
+        "settings title version clock" 1fr
+        / 10rem 6fr 1.5fr 3fr;
+
+    background-color: #ffffff;
+    
+    color: #555555;
 }
 
-header .settings #settingOpen{
+/* ======================================== */
+
+#settingOpen{
     width: 100%;
     height: 100%;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
     margin: 0;
+    padding: 0;
 
-    font-size: 50px;
-    color: #000000;
-    text-decoration: none;
+    display: block;
+
+    grid-area: settings;
+
+    background-color: #efefef;
+
+    border: none;
+    
+    color: #555555;
+    font-size: 3.5rem;
+    line-height: 10rem;
+    text-align: center;
 }
 
-header .settings #settingOpen:active{
-    background-color: #e0e0e0;
+#settingOpen:hover{
+    background-color: #f8f8f8;
 }
 
-header .settings dialog{
-    width: 40vw;
-    height: 50vh;
+#settingOpen:active{
+    background-color: #ffffff;
+}
+
+/* ======================================== */
+
+#dialog{
+    width: calc(100% - 2rem);
+    height: calc(100% - 2rem);
+
+    margin: auto;
+    padding: 0;
 
     display: none;
 
-    left: 30vw;
-    top: 25vh;
+    position: fixed;
+    z-index: 1;
 
-    background-color: #ffffffbb;
-    backdrop-filter: blur(75px);
+    background-color: #ffffff33;
 
-    border-right: 2px solid #ffffff;
-    border-bottom: 2px solid #ffffff;
-    border-left: none;
-    border-top: none;
-    border-radius: 25px;
+    border: none;
 }
 
-header .settings dialog.active{
+#dialog.active{
+    display: flex;
+}
+
+#settings{
+    width: 30%;
+    height: 33rem;
+
+    margin: auto;
+    padding: 2rem;
+
+    display: grid;
+    grid-template: 
+        "gameTimer" 1fr
+        "halfTimer" 1fr
+        "robotTimer" 1fr
+        "blueTeam" 1fr
+        "yellowTeam" 1fr
+        "close" 0.5fr
+        / 1fr;
+
+    background: #ffffff40;
+
+    border-radius: 16px;
+    box-shadow: 0 4px 30px #0000001a;
+    backdrop-filter: blur(10px);
+    border: 1px solid #ffffff;
+}
+
+/* ======================================== */
+
+.timerSetting{
+    width: 100%;
+    height: 5rem;
+
+    margin: 0;
+    padding: 0;
+
+    display: grid;
+    grid-template: 1fr / 2fr 1fr 0.5fr 1fr 0.5fr;
+}
+
+.timerSetting p{
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
     display: block;
-}
 
-header .settings dialog #settingClose{
-    width: 10%;
-    height: auto;
-
-    position: absolute;
-
-    padding: 10px;
-
-    left: 45%;
-    bottom: 3%;
-
+    font-family: Barlow, Noto Sans JP, sans-serif;
+    font-weight: 400;
     font-size: 2rem;
-    line-height: 2rem;
-
-    background-color: #ffffff;
-
-    border-radius: 5px;
-}
-
-header .settings dialog #settingClose:active{
-    background-color: #e0e0e0;
-}
-
-/*--------------------------------------------------*/
-
-dialog .timerSettings{
-    width: 80%;
-    height: 10%;
-
-    position: absolute;
-
-    left: 10%;
-    top: 5%;
-}
-
-.timerSettings .timerSetting{
-    width: 100%;
-    height: 5rem;
-
-    display: grid;
-    grid-auto-flow: row;
-    grid-template-columns: 2fr 0.75fr 0.5fr 0.75fr 0.5fr;
-    grid-template-rows: 1fr;
-    gap: 0;
-
-    margin-bottom: 2rem;
-
-    padding-left: 4rem;
-    padding-right: 4rem;
-
-    font-size: 1.75rem;
     line-height: 5rem;
-
-    background-color: #ffffff;
-
-    border-radius: 5px;
-}
-
-.timerSettings .timerSetting p{
-    display: block;
-    width: 100%;
-    height: 100%;
-
-    font-size: 2.5rem;
-    line-height: 5rem;
-
-    margin-right: 5%;
-}
-
-.timerSettings .timerSetting input:nth-of-type(1){
-    display: block;
-    width: 100%;
-    height: 100%;
-
-    padding: 0 2rem;
-
-    font-size: 3rem;
-    text-align: right;
-
-    border-bottom: #aaaaaa 2px solid;
-}
-
-.timerSettings .timerSetting input:nth-of-type(2){
-    display: block;
-    width: 100%;
-    height: 100%;
-
-    padding: 0 2rem;
-
-    font-size: 3rem;
-    text-align: right;
-
-    border-bottom: #aaaaaa 2px solid;
-}
-
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-}
-
-#blueTeamSetting, #yellowTeamSetting{
-    width: 100%;
-    height: 5rem;
-
-    display: grid;
-    grid-auto-flow: row;
-    grid-template-columns: 1fr 2fr;
-    grid-template-rows: 1fr;
-    gap: 0;
-
-    margin-bottom: 2rem;
-
-    padding-left: 4rem;
-    padding-right: 4rem;
-
-    font-size: 1.75rem;
-    line-height: 5rem;
-
-    background-color: #ffffff;
-
-    border-radius: 5px;
-}
-
-#yellowTeamSetting p, #blueTeamSetting p{
-    display: block;
-    width: 100%;
-    height: 100%;
-
-    font-size: 2.5rem;
-    line-height: 5rem;
-
-    margin-right: 5%;
-}
-
-#yellowTeamSetting input, #blueTeamSetting input{
-    display: block;
-    width: 100%;
-    height: 100%;
-
-    padding: 0 2rem;
-
-    font-size: 3rem;
     text-align: center;
-
-    border-bottom: #aaaaaa 2px solid;
 }
 
-/*--------------------------------------------------*/
-
-header .startTime{
-    width: 17.5%;
+.timerSetting input{
+    width: calc(90% - 2rem);
     height: 100%;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
+    margin: auto;
+    padding: 0 1rem;
+
+    display: block;
+
+    border: solid 1px #bbbbbb;
+    border-radius: 0.75rem;
+
+    font-family: Barlow, Noto Sans JP, sans-serif;
+    font-weight: 400;
+    font-size: 2.5rem;
+    line-height: 5rem;
+    text-align: center;
+}
+
+input[type="number"]::-webkit-outer-spin-button, 
+input[type="number"]::-webkit-inner-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+}
+
+.teamSetting{
+    width: 100%;
+    height: 5rem;
+
     margin: 0;
+    padding: 0;
+
+    display: grid;
+    grid-template: 1fr / 2fr 3fr;
+}
+
+.teamSetting p{
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    display: block;
+
+    font-family: Barlow, Noto Sans JP, sans-serif;
+    font-weight: 400;
+    font-size: 2rem;
+    line-height: 5rem;
+    text-align: center;
+}
+
+.teamSetting input{
+    width: calc(90% - 2rem);
+    height: 100%;
+
+    margin: auto;
+    padding: 0 1rem;
+
+    display: block;
+
+    border: solid 1px #bbbbbb;
+    border-radius: 0.75rem;
+
+    font-family: Barlow, Noto Sans JP, sans-serif;
+    font-weight: 400;
+    font-size: 2.5rem;
+    line-height: 5rem;
+    text-align: center;
+}
+
+#settingClose{
+    width: 3rem;
+    height: 3rem;
+
+    margin: auto;
+    padding: 0;
+
+    display: block;
 
     background-color: #ffffff;
 
-    border-left: #aaaaaa 1px solid;
+    border: solid 1px #bbbbbb;
+    border-radius: 0.75rem;
+
+    font-weight: 400;
+    font-size: 1.5rem;
+    line-height: 3rem;
+    text-align: center;
 }
 
-header .startTime #startTime{
-    font-size: 4rem;
-    font-variant-numeric: tabular-nums;
+#settingClose:hover{
+    background-color: #f8f8f8;
 }
 
-header .title{
-    width: 50%;
+#settingClose:active{
+    background-color: #f0f0f0;
+}
+
+/* ======================================== */
+
+#version{
+    width: 100%;
     height: 100%;
 
-    background-color: #e0e0e0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
     margin: 0;
+    padding: 0;
 
+    grid-area: version;
+
+    display: block;
+
+    background-color: #efefef;
+
+    font-family: Barlow, sans-serif;
+    font-size: 3rem;
+    line-height: 10rem;
+    text-align: center;
+}
+
+/* ======================================== */
+
+#title{
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    grid-area: title;
+
+    display: block;
+
+    background-color: #efefef;
+
+    font-family: Barlow, sans-serif;
+    font-size: 3rem;
+    line-height: 10rem;
+    text-align: center;
+}
+
+/* ======================================== */
+
+#clock{
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    grid-area: clock;
+
+    display: grid;
+    grid-template: 1fr / 1.25fr 1fr;
+
+    background-color: #efefef;  
+}
+
+#clockDate{
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+    
+    display: block;
+
+    font-family: Barlow, sans-serif;
+    font-size: 2rem;
+    line-height: 10rem;
+    text-align: center;
+}
+
+#clockTime{
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    display: block;
+
+    font-family: Barlow, sans-serif;
     font-size: 3.5rem;
-    font-family: Noto Sans JP Medium;
+    line-height: 10rem;
+    text-align: center;
 }
 
-header .clock{
-    width: 25%;
-    height: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    margin: 0;
-}
-
-header .clock .clock-date{
-    width: 50%;
-    height: 100%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    margin: 0;
-
-    font-size: 2.5rem;
-}
-
-header .clock .clock-time{
-    width: 50%;
-    height: 100%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    margin: 0;
-
-    font-size: 4.5rem;
-    font-weight: bold;
-    font-variant-numeric: tabular-nums;
-}
-
-
-
-
-
-
-
-
-
+/* ======================================== */
 
 main{
     width: 100%;
-    height: 87.5%;
+    height: 100%;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
     margin: 0;
+    padding: 0;
+
+    grid-area: main;
+
+    display: grid;
+    grid-template: 
+        "blueTeam vs yellowTeam timer1" 1fr
+        "blueScore now yellowScore timer2" 1fr
+        "blueScore gameTimer yellowScore timer3" 1fr
+        "blueScore gameTimerEdit yellowScore timer4" 1fr
+        "blueScoreEdit middle yellowScoreEdit timerReset" 0.75fr
+        / 2fr 1fr 2fr 1.5fr;
 
     background-color: #ffffff;
 }
 
+/* ======================================== */
 
-
-
-
-
-
-
-
-
-.left{
-    width: 75%;
-    height: 100%;
-}
-
-.left .upper{
-    width: 100%;
-    height: 20%;
-}
-
-.left .upper .teamNames{
+#teamNameBlueContainer{
     width: 100%;
     height: 100%;
-
-    background-color: #b6bdff;
+    
+    margin: 0;
+    padding: 0;
 
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
+    
+    grid-area: blueTeam;
 
+    background-color: #aaaaff;
+}
+
+#vsContainer{
+    width: 100%;
+    height: 100%;
+    
+    margin: 0;
+    padding: 0;
+    
+    display: flex;
+
+    grid-area: vs;
+
+    background-color: #ffffff;
+}
+
+#vs{
+    width: 100%;
+
+    margin: auto;
+    padding: 0;
+
+    font-weight: 400;
+    font-size: 4rem;
     text-align: center;
 }
 
-#teamNames-left{
-    width: 40%;
+#teamNameYellowContainer{
+    width: 100%;
     height: 100%;
+    
+    margin: 0;
+    padding: 0;
 
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
+    
+    grid-area: yellowTeam;
 
-    background-color: #a7a8ff;
-
-    font-weight: bold;
-    font-size: 5rem;
+    background-color: #ffffaa;
 }
 
-#teamNames-middle{
-    width: 20%;
+#teamNameBlue, #teamNameYellow{
+    width: 100%;
+
+    margin: auto;
+    padding: 0;
+
+    font-family: Barlow, Noto Sans JP, sans-serif;
+    font-weight: 500;
+    font-size: 5rem;
+    text-align: center;
+}
+
+/* ======================================== */
+
+#blueScoreContainer{
+    width: 100%;
     height: 100%;
 
+    margin: 0;
+    padding: 0;
+
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
+
+    grid-area: blueScore;
+
+    background-color: #e0e0ff;
+}
+
+#yellowScoreContainer{
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+
+    grid-area: yellowScore;
+
+    background-color: #ffffe0;
+}
+
+#blueScore, #yellowScore{
+    width: 100%;
+
+    margin: auto;
+    padding: 0;
+
+    font-family: Barlow, sans-serif;
+    font-weight: 300;
+    font-size: 30rem;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+}
+
+/* ======================================== */
+
+#now{
+    width: 100%;
+    height: 100%;
     
+    margin: 0;
+    padding: 0;
+
+    grid-area: now;
+
     background-color: #ffffff;
 
-    font-size: 4rem;
-}
+    border: none;
 
-#teamNames-right{
-    width: 40%;
-    height: 100%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    
-    background-color: #ffe694;
-
-    font-weight: bold;
-    font-size: 5rem;
-}
-
-.teamNames small{
-    font-weight: normal;
+    font-family: Barlow, Noto Sans JP, sans-serif;
+    font-weight: 500;
     font-size: 3rem;
+    text-align: center;
 }
 
-
-
-
-
-
-
-
-
-
-.left .middle{
-    width: 100%;
-    height: 65%;
+#now:hover{
+    background-color: #f8f8f8;
 }
 
-.left .middle .scores{
+#now:active{
+    background-color: #f0f0f0;
+}
+
+/* ======================================== */
+
+#gameTimerContainer{
     width: 100%;
     height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+
+    grid-area: gameTimer;
+
+    background-color: #ffffff;
+}
+
+#gameTimer{
+    width: 100%;
+
+    margin: auto;
+    padding: 0;
+
+    font-family: Barlow, sans-serif;
+    font-weight: 500;
+    font-size: 5.5rem;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+}
+
+#gameTimerEdit{
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    grid-area: gameTimerEdit;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#gameTimerEdit button{
+    width: 100%;
+
+    margin: auto;
+    padding: 0;
 
     background-color: #ffffff;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: none;
+
+    font-family: Barlow, sans-serif;
+    font-size: 2.5rem;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
 }
 
-#leftScore{
-    width: 40%;
+#gameTimerEdit button:hover{
+    background-color: #f8f8f8;
+}
+
+#gameTimerEdit button:active{
+    background-color: #f0f0f0;
+}
+
+#gameTimerStart{
+    width: 100%;
     height: 100%;
+
+    margin: 0;
+    padding: 0;
 
     display: block;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    
-    font-size: 30rem;
-    letter-spacing: 30px;
-    font-variant-numeric: tabular-nums;
-
-    background-color: #d0d1ff;
-
-    
+    &.active{
+        display: none;
+    }
 }
 
-#scores-middle{
-    width: 20%;
-    height: 100%;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    
-
-    font-size: 2rem;
-    font-weight: bold;
-
-    background-color: #ffffff;
-}
-
-#half{
-    width: 100%;
-    height: 25%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-
-    font-size: 4rem;
-
-    cursor: pointer;
-
-    background-color: #ffffff;
-}
-
-#half:active{
-    background-color: #e0e0e0;
-}
-
-#timer-main{
-    width: 100%;
-    height: 50%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-
-    font-size: 8rem;
-
-    font-variant-numeric: tabular-nums;
-}
-
-#timer-main.alert{
-    color: #d41b1b
-}
-
-#scores-middle .buttons{
-    width: 100%;
-    height: 25%;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-
-    font-size: 4rem;
-}
-
-#start{
-    width: 50%;
-    height: 100%;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    
-    background-color: #ffffff;
-
-    text-decoration: none;
-    color: #000000;
-    
-    border-right: #aaaaaa 1px solid;
-
-    cursor: pointer;
-}
-
-#start.active{
-    display: none;
-}
-
-#stop{
-    width: 50%;
-    height: 100%;
-    
-    display: none;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    
-    background-color: #ffffff;
-
-    text-decoration: none;
-    color: #000000;
-    
-    border-right: #aaaaaa 1px solid;
-
-    cursor: pointer;
-}
-
-#stop.active{
-    display: flex;
-}
-
-#reset{
-    width: 50%;
-    height: 100%;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    
-    background-color: #ffffff;
-
-    text-decoration: none;
-    color: #000000;
-    
-    border-left: #aaaaaa 1px solid;
-
-    cursor: pointer;
-}
-
-#stop:active, #start:active, #reset:active{
-    background-color: #e0e0e0;
-}
-
-#rightScore{
-    width: 40%;
-    height: 100%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    
-    font-size: 30rem;
-    letter-spacing: 30px;
-    font-variant-numeric: tabular-nums;
-
-    background-color: #fff1c1;
-}
-
-
-
-
-
-
-
-
-
-
-.left .bottom{
-    width: 100%;
-    height: 15%;
-}
-
-.left .bottom .scoreManage{
+#gameTimerStop{
     width: 100%;
     height: 100%;
-
-    background-color: #ffffff;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
     margin: 0;
+    padding: 0;
+
+    display: none;
+
+    &.active{
+        display: block;
+    }
 }
 
-#scoreManage-left{
-    width: 40%;
-    height: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-weight: bold;
-    font-size: 3.5rem;
-
-    vertical-align: middle;
-    letter-spacing: 10px;
-}
-
-#scoreManage-middle{
-    width: 20%;
-    height: 100%;
-}
-
-#scoreManage-right{
-    width: 40%;
-    height: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-weight: bold;
-    font-size: 3.5rem;
-
-    letter-spacing: 10px;
-}
-
-#scoreMinusLeft{
-    width: 50%;
-    height: 100%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    text-decoration: none;
-
-    border-right: #aaaaaa 1px solid;
-    color: #000000;
-
-    cursor: pointer;
-}
-
-#scoreMinusLeft:active{
-    background-color: #e0e0e0;
-}
-
-
-#scorePlusLeft{
-    width: 50%;
-    height: 100%;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    border-left: #aaaaaa 1px solid;
-
-    text-decoration: none;
-    color: #000000;
-
-    cursor: pointer;
-}
-
-#scorePlusLeft:active{
-    background-color: #e0e0e0;
-}
-
-#scoreMinusRight{
-    width: 50%;
-    height: 100%;
-        
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    border-right: #aaaaaa 1px solid;
-
-    text-decoration: none;
-    color: #000000;
-
-    cursor: pointer;
-}
-
-#scoreMinusRight:active{
-    background-color: #e0e0e0;
-}
-
-#scorePlusRight{
-    width: 50%;
-    height: 100%;
-        
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    border-left: #aaaaaa 1px solid;
-    border-right: #aaaaaa 1px solid;
-
-    text-decoration: none;
-    color: #000000;
-
-    cursor: pointer;
-}
-
-#scorePlusRight:active{
-    background-color: #e0e0e0;
-}
-
-
-
-
-
-
-
-
-
-.right{
-    width: 25%;
-    height: 100%;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    margin: 0;
-}
-
-
-.element{
+#gameTimerReset{
     width: 100%;
-    height: 21.25%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    display: block;
+}
+
+/* ======================================== */
+
+#blueScoreEdit{
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    grid-area: blueScoreEdit;
 
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    grid-template-rows: repeat(2, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
-    gap: 0;
-    margin: 0;
+    grid-template-columns: 1fr 1fr;
 }
 
-.element:nth-child(1){
-    border-bottom: #aaaaaa 1px solid;
-}
-
-
-.element:nth-child(2), .element:nth-child(3), .element:nth-child(4){
-    border-top: #aaaaaa 1px solid;
-    border-bottom: #aaaaaa 1px solid;
-}
-
-.element:nth-child(5){
-    height: 15%;
-
-    border-top: #aaaaaa 1px solid;
-    
-    background-color: #e0e0e0;
-}
-
-#allreset{
+#yellowScoreEdit{
     width: 100%;
     height: 100%;
-    
-    grid-area: 1 / 1 / 3 / 4;
 
-    font-size: 2.5rem;
+    margin: 0;
+    padding: 0;
+
+    grid-area: yellowScoreEdit;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#blueScoreEdit button, #yellowScoreEdit button{
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    display: block;
 
     background-color: #ffffff;
 
-    border-left: #aaaaaa 1px solid;
+    border: none;
+
+    font-family: Barlow, sans-serif;
+    font-weight: 500;
+    font-size: 3rem;
+    text-align: center;
 }
 
-.element .number{
+#blueScoreEdit button:hover, #yellowScoreEdit button:hover{
+    background-color: #f8f8f8;
+}
+
+#blueScoreEdit button:active, #yellowScoreEdit button:active{
+    background-color: #f0f0f0;
+}
+
+/* ======================================== */
+
+#timer1Container{
+    grid-area: timer1;
+}
+
+#timer2Container{
+    grid-area: timer2;
+}
+
+#timer3Container{
+    grid-area: timer3;
+}
+
+#timer4Container{
+    grid-area: timer4;
+}
+
+/* ======================================== */
+
+.timer{
     width: 100%;
     height: 100%;
 
-    grid-area: 1 / 1 / 3 / 2;
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
     margin: 0;
+    padding: 0;
 
-    font-size: 5rem;
-
-    background-color: #e0e0e0;
+    display: grid;
+    grid-template: 1fr / 0.5fr 1.5fr 0.75fr 0.75fr;
 }
 
-.element .number.active{
-    background-color: #ffffff;
-}
-
-.element .number.active.alert{
-    background-color: #ee9090;
-}
-
-.element .display{
+.num{
     width: 100%;
     height: 100%;
 
-    grid-area: 1 / 2 / 3 / 3;
+    margin: 0;
+    padding: 0;
 
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    margin: 0;
+}
 
-    font-size: 4.5rem;
+.num p{
+    margin: auto;
+
+    display: block;
+
+    color: #bbbbbb;
+    font-family: Barlow, sans-serif;
+    font-weight: 400;
+    font-size: 4rem;
+}
+
+.num.active p{
+    color: #000000;
+}
+
+.num.finish p{
+    color: #ee2222;
+}
+
+.time{
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+}
+
+.time p{
+    margin: auto;
+
+    display: block;
+
+    color: #bbbbbb;
+    font-family: Barlow, sans-serif;
+    font-weight: 400;
+    font-size: 4rem;
     font-variant-numeric: tabular-nums;
-
-    background-color: #e0e0e0;
 }
 
-.element .display.active{
-    background-color: #ffffff;
+.time p.active{
+    color: #000000;
 }
 
-.element .display.active.alert{
-    background-color: #ee9090;
+.time p.finish{
+    color: #ee2222;
 }
 
-.element .start-btn{
+.timerStart{
     width: 100%;
     height: 100%;
 
-    grid-area: 1 / 3 / 2 / 4;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
     margin: 0;
-
-    font-size: 2.5rem;
+    padding: 0;
 
     background-color: #ffffff;
+
+    border: none;
+
+    font-family: Barlow, sans-serif;
+    font-size: 1.75rem;
 }
 
-.element .start-btn.active{
-    background-color: #e0e0e0;
-}
-
-.element .reset-btn{
+.timerReset{
     width: 100%;
     height: 100%;
 
-    align-items: center;
-    justify-content: center;
-    gap: 0;
     margin: 0;
-
-    font-size: 2.5rem;
+    padding: 0;
 
     background-color: #ffffff;
+
+    border: none;
+
+    font-family: Barlow, sans-serif;
+    font-size: 1.75rem;
 }
 
-.element .reset-btn:active{
-    background-color: #e0e0e0;
+.timerStart:hover, .timerReset:hover{
+    background-color: #f8f8f8;
 }
+
+.timerStart:active, .timerReset:active{
+    background-color: #f0f0f0;
+}
+
+/* ======================================== */
+
+#allReset{
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    grid-area: timerReset;
+
+    background-color: #ffffff;
+
+    border: none;
+
+    font-family: Barlow, sans-serif;
+    font-size: 3rem;
+}
+
+#allReset:hover{
+    background-color: #f8f8f8;
+}
+
+#allReset:active{
+    background-color: #f0f0f0;
+}
+
+/* ======================================== */

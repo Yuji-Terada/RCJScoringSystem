@@ -39,8 +39,8 @@ function clock(){
     sec = sec < 10 ? "0" + sec : sec;
     let today = `${year}.${month}.${date} ${day}`;
     let time = `${hour}:${min}:${sec}`;
-    document.querySelector(".clock-date").innerText = today;
-    document.querySelector(".clock-time").innerText = time;
+    document.getElementById("clockDate").textContent = today;
+    document.getElementById("clockTime").textContent = time;
 };
 setInterval(clock, 10);
 
@@ -67,21 +67,21 @@ function gameTimerMain(){
 }
 gameTimerMain();
 
-$("#start").click(function(){
-    $("#start").toggleClass("active");
-    $("#stop").toggleClass("active");
+$("#gameTimerStart").click(function(){
+    $("#gameTimerStart").toggleClass("active");
+    $("#gameTimerStop").toggleClass("active");
     gameTimer = setInterval("gameTimerMain()", 10);
 });
 
-$("#stop").click(function(){
-    $("#start").toggleClass("active");
-    $("#stop").toggleClass("active");
+$("#gameTimerStop").click(function(){
+    $("#gameTimerStart").toggleClass("active");
+    $("#gameTimerStop").toggleClass("active");
     clearInterval(gameTimer);
 });
 
-$("#reset").click(function(){
-    $("#start").removeClass("active");
-    $("#stop").removeClass("active");
+$("#gameTimerReset").click(function(){
+    $("#gameTimerStart").removeClass("active");
+    $("#gameTimerStop").removeClass("active");
     clearInterval(gameTimer);
     gT = gTInit;
     gameTimerMain();
@@ -95,34 +95,32 @@ $("#reset").click(function(){
 var scoreLeft = 0;
 var scoreRight = 0;
 
-$("#scoreMinusLeft").click(function(){
-    console.log("aA");
+$("#blueScoreMinus").click(function(){
     scoreLeft = Number(scoreLeft) > 0 ? Number(scoreLeft) - 1 : Number(scoreLeft);
     scoreLeft = Number(scoreLeft) < 10 ? "0" + Number(scoreLeft) : Number(scoreLeft);
-    document.getElementById("leftScore").innerHTML = scoreLeft;
+    document.getElementById("blueScore").innerHTML = scoreLeft;
     soundStop();
     minus.play();
 });
-$("#scorePlusLeft").click(function(){
+$("#blueScorePlus").click(function(){
     scoreLeft = Number(scoreLeft) + 1;
     scoreLeft = Number(scoreLeft) < 10 ? "0" + Number(scoreLeft) : Number(scoreLeft);
-    document.getElementById("leftScore").innerHTML = scoreLeft;
+    document.getElementById("blueScore").innerHTML = scoreLeft;
     soundStop();
     plus.play();
 });
 
-$("#scoreMinusRight").click(function(){
-    console.log("aA");
+$("#yellowScoreMinus").click(function(){
     scoreRight = Number(scoreRight) > 0 ? Number(scoreRight) - 1 : Number(scoreRight);
     scoreRight = Number(scoreRight) < 10 ? "0" + Number(scoreRight) : Number(scoreRight);
-    document.getElementById("rightScore").innerHTML = scoreRight;
+    document.getElementById("yellowScore").innerHTML = scoreRight;
     soundStop();
     minus.play();
 });
-$("#scorePlusRight").click(function(){
+$("#yellowScorePlus").click(function(){
     scoreRight = Number(scoreRight) + 1;
     scoreRight = Number(scoreRight) < 10 ? "0" + Number(scoreRight) : Number(scoreRight);
-    document.getElementById("rightScore").innerHTML = scoreRight;
+    document.getElementById("yellowScore").innerHTML = scoreRight;
     soundStop();
     plus.play();
 });
@@ -133,6 +131,12 @@ $("#scorePlusRight").click(function(){
 
 //機体別タイマー
 var tInit = 6000;
+
+var timer1;
+var timer2;
+var timer3;
+var timer4;
+
 var t1 = tInit;
 var t2 = tInit;
 var t3 = tInit;
@@ -147,15 +151,17 @@ function timer1Main() {
     t1Min = t1Sec == 60 ? Number(t1Min) + 1 : t1Min;
     t1Min = Number(t1Min) < 10 ? "0" + Number(t1Min) : t1Min;
     t1Sec = t1Sec == 60 ? "00" : t1Sec;
-    document.getElementById("t1").innerHTML = t1Min + ":" + t1Sec;
+    document.getElementById("t1").textContent = t1Min + ":" + t1Sec;
     if(t1 == 0){
-        document.getElementById("t1").style.color = '#ff0000';
+        document.getElementById("t1Num").classList.add("finish");
+        document.getElementById("t1").classList.add("finish");
         clearInterval(timer1);
         soundStop();
         timerFinishSound.play();
     }
     else{
-        document.getElementById("t1").style.color = '#333333';
+        document.getElementById("t1Num").classList.add("active");
+        document.getElementById("t1").classList.add("active");
     }
     t1 =  t1 > 0 ? t1 - 1 : t1;
 }
@@ -172,13 +178,15 @@ function timer2Main() {
     t2Sec = t2Sec == 60 ? "00" : t2Sec;
     document.getElementById("t2").innerHTML = t2Min + ":" + t2Sec;
     if(t2 == 0){
-        document.getElementById("t2").style.color = '#ff0000';
+        document.getElementById("t2Num").classList.add("finish");
+        document.getElementById("t2").classList.add("finish");
         clearInterval(timer2);
         soundStop();
         timerFinishSound.play();
     }
     else{
-        document.getElementById("t2").style.color = '#333333';
+        document.getElementById("t2Num").classList.add("active");
+        document.getElementById("t2").classList.add("active");
     }
     t2 =  t2 > 0 ? t2 - 1 : t2;
 }
@@ -195,13 +203,15 @@ function timer3Main() {
     t3Sec = t3Sec == 60 ? "00" : t3Sec;
     document.getElementById("t3").innerHTML = t3Min + ":" + t3Sec;
     if(t3 == 0){
-        document.getElementById("t3").style.color = '#ff0000';
+        document.getElementById("t3Num").classList.add("finish");
+        document.getElementById("t3").classList.add("finish");
         clearInterval(timer3);
         soundStop();
         timerFinishSound.play();
     }
     else{
-        document.getElementById("t3").style.color = '#333333';
+        document.getElementById("t3Num").classList.add("active");
+        document.getElementById("t3").classList.add("active");
     }
     t3 =  t3 > 0 ? t3 - 1 : t3;
 }
@@ -218,13 +228,15 @@ function timer4Main() {
     t4Sec = t4Sec == 60 ? "00" : t4Sec;
     document.getElementById("t4").innerHTML = t4Min + ":" + t4Sec;
     if(t4 == 0){
-        document.getElementById("t4").style.color = '#ff0000';
+        document.getElementById("t4Num").classList.add("finish");
+        document.getElementById("t4").classList.add("finish");
         clearInterval(timer4);
         soundStop();
         timerFinishSound.play();
     }
     else{
-        document.getElementById("t4").style.color = '#333333';
+        document.getElementById("t4Num").classList.add("active");
+        document.getElementById("t4").classList.add("active");
     }
     t4 =  t4 > 0 ? t4 - 1 : t4;
 }
@@ -239,79 +251,79 @@ var t2Active = true;
 var t3Active = true;
 var t4Active = true;
 
-$("#timer1").click(function(){
-    $("#t1Number").toggleClass("active");
+$("#t1Start").click(function(){
+    $("#t1Num").toggleClass("active");
     $("#t1").toggleClass("active");
-    $("#timer1").toggleClass("active");
+    $("#t1Start").toggleClass("active");
     if(t1Active){
-        document.getElementById("timer1").innerHTML = '<i class="fa-solid fa-pause"></i>';
+        document.getElementById("t1Start").innerHTML = '<i class="fa-solid fa-pause"></i>';
         t1Active = !t1Active;
         timer1 = setInterval("timer1Main()", 10);
         soundStop();
         timerStartSound.play();
     }
     else{
-        document.getElementById("timer1").innerHTML = '<i class="fa-solid fa-play"></i>';
+        document.getElementById("t1Start").innerHTML = '<i class="fa-solid fa-play"></i>';
         t1Active = !t1Active;
         clearInterval(timer1);
     }
 });
 
-$("#timer2").click(function(){
-    $("#t2Number").toggleClass("active");
+$("#t2Start").click(function(){
+    $("#t2Num").toggleClass("active");
     $("#t2").toggleClass("active");
-    $("#timer2").toggleClass("active");
+    $("#t2Start").toggleClass("active");
     if(t2Active){
-        document.getElementById("timer2").innerHTML = '<i class="fa-solid fa-pause"></i>';
+        document.getElementById("t2Start").innerHTML = '<i class="fa-solid fa-pause"></i>';
         t2Active = !t2Active;
         timer2 = setInterval("timer2Main()", 10);
         soundStop();
         timerStartSound.play();
     }
     else{
-        document.getElementById("timer2").innerHTML = '<i class="fa-solid fa-play"></i>';
+        document.getElementById("t2Start").innerHTML = '<i class="fa-solid fa-play"></i>';
         t2Active = !t2Active;
         clearInterval(timer2);
     }
 });
 
-$("#timer3").click(function(){
-    $("#t3Number").toggleClass("active");
+$("#t3Start").click(function(){
+    $("#t3Num").toggleClass("active");
     $("#t3").toggleClass("active");
-    $("#timer3").toggleClass("active");
+    $("#t3Start").toggleClass("active");
     if(t3Active){
-        document.getElementById("timer3").innerHTML = '<i class="fa-solid fa-pause"></i>';
+        document.getElementById("t3Start").innerHTML = '<i class="fa-solid fa-pause"></i>';
         t3Active = !t3Active;
         timer3 = setInterval("timer3Main()", 10);
         soundStop();
         timerStartSound.play();
     }
     else{
-        document.getElementById("timer3").innerHTML = '<i class="fa-solid fa-play"></i>';
+        document.getElementById("t3Start").innerHTML = '<i class="fa-solid fa-play"></i>';
         t3Active = !t3Active;
         clearInterval(timer3);
     }
 });
 
-$("#timer4").click(function(){
-    $("#t4Number").toggleClass("active");
+$("#t4Start").click(function(){
+    $("#t4Num").toggleClass("active");
     $("#t4").toggleClass("active");
-    $("#timer4").toggleClass("active");
+    $("#t4Start").toggleClass("active");
     if(t4Active){
-        document.getElementById("timer4").innerHTML = '<i class="fa-solid fa-pause"></i>';
+        document.getElementById("t4Start").innerHTML = '<i class="fa-solid fa-pause"></i>';
         t4Active = !t4Active;
         timer4 = setInterval("timer4Main()", 10);
         soundStop();
         timerStartSound.play();
     }
     else{
-        document.getElementById("timer4").innerHTML = '<i class="fa-solid fa-play"></i>';
+        document.getElementById("t4Start").innerHTML = '<i class="fa-solid fa-play"></i>';
         t4Active = !t4Active;
         clearInterval(timer4);
     }
 });
 
-$("#allreset").click(function(){
+$("#allReset").click(function(){
     timer1Reset();
     timer2Reset();
     timer3Reset();
@@ -320,63 +332,91 @@ $("#allreset").click(function(){
     timer2Main();
     timer3Main();
     timer4Main();
+    $("#t1Num").removeClass("active");
+    $("#t1").removeClass("active");
+    $("#t1Num").removeClass("finish");
+    $("#t1").removeClass("finish");
+    $("#t1Start").removeClass("active");
+    $("#t2Num").removeClass("active");
+    $("#t2").removeClass("active");
+    $("#t2Num").removeClass("finish");
+    $("#t2").removeClass("finish");
+    $("#t2Start").removeClass("active");
+    $("#t3Num").removeClass("active");
+    $("#t3").removeClass("active");
+    $("#t3Num").removeClass("finish");
+    $("#t3").removeClass("finish");
+    $("#t3Start").removeClass("active");
+    $("#t4Num").removeClass("active");
+    $("#t4").removeClass("active");
+    $("#t4Num").removeClass("finish");
+    $("#t4").removeClass("finish");
+    $("#t4Start").removeClass("active");
 });
 
 function timer1Reset(){
     t1Active = true;
     t1 = tInit;
     timer1Main();
-    $("#t1Number").removeClass("active");
-    $("#t1").removeClass("active");
-    $("#timer1").removeClass("active");
-    document.getElementById("timer1").innerHTML = '<i class="fa-solid fa-play"></i>';
     clearInterval(timer1);
+    $("#t1Num").removeClass("active");
+    $("#t1").removeClass("active");
+    $("#t1Num").removeClass("finish");
+    $("#t1").removeClass("finish");
+    $("#t1Start").removeClass("active");
+    document.getElementById("t1Start").innerHTML = '<i class="fa-solid fa-play"></i>';
 }
 function timer2Reset(){
     t2Active = true;
     t2 = tInit;
     timer2Main();
-    $("#t2Number").removeClass("active");
-    $("#t2").removeClass("active");
-    $("#timer2").removeClass("active");
-    document.getElementById("timer2").innerHTML = '<i class="fa-solid fa-play"></i>';
     clearInterval(timer2);
+    $("#t2Num").removeClass("active");
+    $("#t2").removeClass("active");
+    $("#t2Num").removeClass("finish");
+    $("#t2").removeClass("finish");
+    $("#t2Start").removeClass("active");
+    document.getElementById("t2Start").innerHTML = '<i class="fa-solid fa-play"></i>';
 }
 function timer3Reset(){
     t3Active = true;
     t3 = tInit;
     timer3Main();
-    $("#t3Number").removeClass("active");
-    $("#t3").removeClass("active");
-    $("#timer3").removeClass("active");
-    document.getElementById("timer3").innerHTML = '<i class="fa-solid fa-play"></i>';
     clearInterval(timer3);
+    $("#t3Num").removeClass("active");
+    $("#t3").removeClass("active");
+    $("#t3Num").removeClass("finish");
+    $("#t3").removeClass("finish");
+    $("#t3Start").removeClass("active");
+    document.getElementById("t3Start").innerHTML = '<i class="fa-solid fa-play"></i>';
 }
 function timer4Reset(){
     t4Active = true;
     t4 = tInit;
     timer4Main();
-    $("#t4Number").removeClass("active");
-    $("#t4").removeClass("active");
-    $("#timer4").removeClass("active");
-    document.getElementById("timer4").innerHTML = '<i class="fa-solid fa-play"></i>';
     clearInterval(timer4);
+    $("#t4Num").removeClass("active");
+    $("#t4").removeClass("active");
+    $("#t4Num").removeClass("finish");
+    $("#t4").removeClass("finish");
+    $("#t4Start").removeClass("active");
+    document.getElementById("t4Start").innerHTML = '<i class="fa-solid fa-play"></i>';
 }
 
 
-$("#timer1-re").click(function(){
+$("#t1Reset").click(function(){
     timer1Reset();
 });
 
-$("#timer2-re").click(function(){
+$("#t2Reset").click(function(){
     timer2Reset();
 });
 
-$("#timer3-re").click(function(){
+$("#t3Reset").click(function(){
     timer3Reset();
 });
 
-$("#timer4-re").click(function(){
+$("#t4Reset").click(function(){
     timer4Reset();
 });
 
@@ -386,23 +426,23 @@ $("#timer4-re").click(function(){
 
 //前後半・ハーフタイム切り替え
 var gameMode = 0;
-var gameModeWord = ["前半", "ハーフタイム", "後半", "休憩"];
+var gameModeWord = ["前半", "ハーフ", "後半", "休憩"];
 
 var hTInit = 30000;
 
-$("#half").click(function(){
+$("#now").click(function(){
     gameMode = gameMode < gameModeWord.length-1 ? gameMode + 1 : 0;
-    document.getElementById("half").innerHTML = gameModeWord[gameMode];
+    document.getElementById("now").innerHTML = gameModeWord[gameMode];
     if(gameModeWord[gameMode] == "前半" || gameModeWord[gameMode] == "後半"){
-        $("#start").removeClass("active");
-        $("#stop").removeClass("active");
+        $("#gameTimerStart").removeClass("active");
+        $("#gameTimerStop").removeClass("active");
         clearInterval(gameTimer);
         gT = gTInit;
         gameTimerMain();
     }
-    else if(gameModeWord[gameMode] == "ハーフタイム"){
-        $("#start").removeClass("active");
-        $("#stop").removeClass("active");
+    else if(gameModeWord[gameMode] == "ハーフ"){
+        $("#gameTimerStart").removeClass("active");
+        $("#gameTimerStop").removeClass("active");
         clearInterval(gameTimer);
         gT = hTInit;
         gameTimerMain();
@@ -423,18 +463,12 @@ var robotTimerSettingSec = document.getElementById("robotTimerSettingSec");
 var blueTeamSetting = document.getElementById("blueTeam");
 var yellowTeamSetting = document.getElementById("yellowTeam");
 
-$("#settingOpen").click(function(){
-    $("#dialog").addClass("active");
-});
-
-$("#settingClose").click(function(){
-    $("#dialog").removeClass("active");
-
+function settingUpdate(){
     gTInit = (Number(gameTimerSettingMin.value) * 60 + Number(gameTimerSettingSec.value)) * 100;
     tInit = (Number(robotTimerSettingMin.value) * 60 + Number(robotTimerSettingSec.value)) * 100;
     hTInit = (Number(halfTimerSettingMin.value) * 60 + Number(halfTimerSettingSec.value)) * 100;
-    document.getElementById("teamNames-left").innerHTML = blueTeamSetting.value;
-    document.getElementById("teamNames-right").innerHTML = yellowTeamSetting.value;
+    document.getElementById("teamNameBlue").innerHTML = blueTeamSetting.value;
+    document.getElementById("teamNameYellow").innerHTML = yellowTeamSetting.value;
 
     timer1Reset();
     timer2Reset();
@@ -444,4 +478,22 @@ $("#settingClose").click(function(){
     clearInterval(gameTimer);
     gT = gTInit;
     gameTimerMain();
-})
+}
+
+$("#settingOpen").click(function(){
+    $("#dialog").addClass("active");
+});
+
+$("#settingClose").click(function(){
+    $("#dialog").removeClass("active");
+    settingUpdate();
+});
+settingUpdate();
+
+//============================================================
+
+//バージョン管理（ページタイトル変更など）
+var version = "0.1.1"   //ここを変更することですべて変更される
+document.title = "RCJ Score Manager | ver " + version;
+var versionDisplay = document.getElementById("version");
+versionDisplay.textContent = "ver " + version;

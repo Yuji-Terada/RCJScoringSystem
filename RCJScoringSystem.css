@@ -862,6 +862,11 @@ main{
         "timer3 timerReset timer4" 0.75fr
         / 2fr 1fr 2fr ;
     }
+
+    #settings{
+        width: 60%;
+        height: 38rem;
+    }
     
     #version{
         font-size: 2.5rem;

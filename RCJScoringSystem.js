@@ -493,7 +493,7 @@ settingUpdate();
 //============================================================
 
 //バージョン管理（ページタイトル変更など）
-var version = "0.2.0"   //ここを変更することですべて変更される
+var version = "0.2.1"   //ここを変更することですべて変更される
 document.title = "RCJ Score Manager | ver " + version;
 var versionDisplay = document.getElementById("version");
 versionDisplay.textContent = "ver " + version;

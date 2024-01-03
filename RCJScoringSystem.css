@@ -827,7 +827,37 @@ main{
     background-color: #f0f0f0;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* ======================================== */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media screen and (max-width: 1280px) {
     html{
@@ -861,6 +891,10 @@ main{
         "timer1 timerReset timer2" 0.75fr
         "timer3 timerReset timer4" 0.75fr
         / 2fr 1fr 2fr ;
+    }
+
+    button{
+        color: #000;
     }
 
     #settings{

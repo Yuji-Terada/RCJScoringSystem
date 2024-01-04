@@ -12,7 +12,7 @@ var timerFinish3;
 var timerFinish4;
 var gameTimerFinish;
 
-var timerFinishInterval = 1000;
+var timerFinishInterval = 2500;
 var gameTimerFinishInterval = 2500;
 
 function soundStop(){

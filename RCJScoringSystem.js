@@ -447,6 +447,29 @@ $("#now").click(function(){
         gT = hTInit;
         gameTimerMain();
     }
+
+    if(gameModeWord[gameMode] == "前半"){
+        var tmp = scoreLeft;
+        scoreLeft = scoreRight;
+        scoreRight = tmp;
+
+        scoreLeft = scoreLeft < 10 ? "0" + Number(scoreLeft) : Number(scoreLeft);
+        scoreRight = scoreRight < 10 ? "0" + Number(scoreRight) : Number(scoreRight);
+
+        document.getElementById("blueScore").innerHTML = scoreLeft;
+        document.getElementById("yellowScore").innerHTML = scoreRight;
+    }
+    else if(gameModeWord[gameMode] == "後半"){
+        var tmp = scoreLeft;
+        scoreLeft = scoreRight;
+        scoreRight = tmp;
+
+        scoreLeft = scoreLeft < 10 ? "0" + Number(scoreLeft) : Number(scoreLeft);
+        scoreRight = scoreRight < 10 ? "0" + Number(scoreRight) : Number(scoreRight);
+        
+        document.getElementById("blueScore").innerHTML = scoreLeft;
+        document.getElementById("yellowScore").innerHTML = scoreRight;
+    }
 });
 
 //============================================================
@@ -493,7 +516,7 @@ settingUpdate();
 //============================================================
 
 //バージョン管理（ページタイトル変更など）
-var version = "0.2.1"   //ここを変更することですべて変更される
+var version = "1.0.0"   //ここを変更することですべて変更される
 document.title = "RCJ Score Manager | ver " + version;
 var versionDisplay = document.getElementById("version");
 versionDisplay.textContent = "ver " + version;

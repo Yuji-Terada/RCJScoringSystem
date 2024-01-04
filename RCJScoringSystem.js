@@ -1,21 +1,34 @@
+//音声
 var timerStartSound = new Audio("./timer.mp3");
 var timerFinishSound = new Audio("./timerEnd.mp3");
 var plus = new Audio("./plus.mp3");
 var minus = new Audio("./minus.mp3");
+var gameTimerStartSound = new Audio("./gameTimer.mp3");
+var gameTimerFinishSound = new Audio("./gameTimerEnd.mp3");
+
+var timerFinish1;
+var timerFinish2;
+var timerFinish3;
+var timerFinish4;
+var gameTimerFinish;
+
+var timerFinishInterval = 1000;
+var gameTimerFinishInterval = 2500;
 
 function soundStop(){
     timerStartSound.pause();
     timerStartSound.currentTime = 0;
     timerFinishSound.pause();
     timerFinishSound.currentTime = 0;
+    gameTimerStartSound.pause();
+    gameTimerStartSound.currentTime = 0;
+    gameTimerFinishSound.pause();
+    gameTimerFinishSound.currentTime = 0;
     plus.pause();
     plus.currentTime = 0;
     minus.pause();
     minus.currentTime = 0;
 }
-
-
-
 
 //============================================================
 
@@ -63,7 +76,17 @@ function gameTimerMain(){
 
     document.getElementById("gameTimer").innerHTML = gTMin + ":" + gTSec;
 
-    gT = gT > 0 ? gT - 1 : gT;
+    gT = gT >= 0 ? gT - 1 : gT;
+
+    if(gT < 0){
+        clearInterval(gameTimer);
+        soundStop();
+        gameTimerFinishSound.play();
+        gameTimerFinish = setInterval(() => {
+            soundStop();
+            gameTimerFinishSound.play();
+        }, gameTimerFinishInterval);
+    }
 }
 gameTimerMain();
 
@@ -71,6 +94,8 @@ $("#gameTimerStart").click(function(){
     $("#gameTimerStart").toggleClass("active");
     $("#gameTimerStop").toggleClass("active");
     gameTimer = setInterval("gameTimerMain()", 10);
+    soundStop();
+    gameTimerStartSound.play();
 });
 
 $("#gameTimerStop").click(function(){
@@ -80,9 +105,10 @@ $("#gameTimerStop").click(function(){
 });
 
 $("#gameTimerReset").click(function(){
+    clearInterval(gameTimer);
+    clearInterval(gameTimerFinish);
     $("#gameTimerStart").removeClass("active");
     $("#gameTimerStop").removeClass("active");
-    clearInterval(gameTimer);
     gT = gTInit;
     gameTimerMain();
 });
@@ -130,7 +156,7 @@ $("#yellowScorePlus").click(function(){
 //============================================================
 
 //機体別タイマー
-var tInit = 6000;
+var tInit = 300;
 
 var timer1;
 var timer2;
@@ -158,6 +184,10 @@ function timer1Main() {
         clearInterval(timer1);
         soundStop();
         timerFinishSound.play();
+        timerFinish1 = setInterval(() => {
+            soundStop();
+            timerFinishSound.play();
+        }, timerFinishInterval);
     }
     else{
         document.getElementById("t1Num").classList.add("active");
@@ -183,6 +213,10 @@ function timer2Main() {
         clearInterval(timer2);
         soundStop();
         timerFinishSound.play();
+        timerFinish2 = setInterval(() => {
+            soundStop();
+            timerFinishSound.play();
+        }, timerFinishInterval);
     }
     else{
         document.getElementById("t2Num").classList.add("active");
@@ -208,6 +242,10 @@ function timer3Main() {
         clearInterval(timer3);
         soundStop();
         timerFinishSound.play();
+        timerFinish3 = setInterval(() => {
+            soundStop();
+            timerFinishSound.play();
+        }, timerFinishInterval);
     }
     else{
         document.getElementById("t3Num").classList.add("active");
@@ -233,6 +271,10 @@ function timer4Main() {
         clearInterval(timer4);
         soundStop();
         timerFinishSound.play();
+        timerFinish4 = setInterval(() => {
+            soundStop();
+            timerFinishSound.play();
+        }, timerFinishInterval);
     }
     else{
         document.getElementById("t4Num").classList.add("active");
@@ -359,6 +401,7 @@ function timer1Reset(){
     t1 = tInit;
     timer1Main();
     clearInterval(timer1);
+    clearInterval(timerFinish1);
     $("#t1Num").removeClass("active");
     $("#t1").removeClass("active");
     $("#t1Num").removeClass("finish");
@@ -371,6 +414,7 @@ function timer2Reset(){
     t2 = tInit;
     timer2Main();
     clearInterval(timer2);
+    clearInterval(timerFinish2);
     $("#t2Num").removeClass("active");
     $("#t2").removeClass("active");
     $("#t2Num").removeClass("finish");
@@ -383,6 +427,7 @@ function timer3Reset(){
     t3 = tInit;
     timer3Main();
     clearInterval(timer3);
+    clearInterval(timerFinish3);
     $("#t3Num").removeClass("active");
     $("#t3").removeClass("active");
     $("#t3Num").removeClass("finish");
@@ -395,6 +440,7 @@ function timer4Reset(){
     t4 = tInit;
     timer4Main();
     clearInterval(timer4);
+    clearInterval(timerFinish4);
     $("#t4Num").removeClass("active");
     $("#t4").removeClass("active");
     $("#t4Num").removeClass("finish");
@@ -487,6 +533,12 @@ var blueTeamSetting = document.getElementById("blueTeam");
 var yellowTeamSetting = document.getElementById("yellowTeam");
 
 function settingUpdate(){
+    clearInterval(gameTimerFinish);
+    $("#gameTimerStart").removeClass("active");
+    $("#gameTimerStop").removeClass("active");
+    gT = gTInit;
+    gameTimerMain();
+
     gTInit = (Number(gameTimerSettingMin.value) * 60 + Number(gameTimerSettingSec.value)) * 100;
     tInit = (Number(robotTimerSettingMin.value) * 60 + Number(robotTimerSettingSec.value)) * 100;
     hTInit = (Number(halfTimerSettingMin.value) * 60 + Number(halfTimerSettingSec.value)) * 100;
@@ -516,7 +568,7 @@ settingUpdate();
 //============================================================
 
 //バージョン管理（ページタイトル変更など）
-var version = "1.0.0"   //ここを変更することですべて変更される
+var version = "1.0.1"   //ここを変更することですべて変更される
 document.title = "RCJ Score Manager | ver " + version;
 var versionDisplay = document.getElementById("version");
 versionDisplay.textContent = "ver " + version;

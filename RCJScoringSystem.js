@@ -15,6 +15,8 @@ var gameTimerFinish;
 var timerFinishInterval = 2500;
 var gameTimerFinishInterval = 2500;
 
+var gameTimerFlag = false;
+
 function soundStop(){
     timerStartSound.pause();
     timerStartSound.currentTime = 0;
@@ -82,10 +84,6 @@ function gameTimerMain(){
         clearInterval(gameTimer);
         soundStop();
         gameTimerFinishSound.play();
-        gameTimerFinish = setInterval(() => {
-            soundStop();
-            gameTimerFinishSound.play();
-        }, gameTimerFinishInterval);
     }
 }
 gameTimerMain();
@@ -93,7 +91,9 @@ gameTimerMain();
 $("#gameTimerStart").click(function(){
     $("#gameTimerStart").toggleClass("active");
     $("#gameTimerStop").toggleClass("active");
-    gameTimer = setInterval("gameTimerMain()", 10);
+    if(!gameTimerFlag){
+        gameTimer = setInterval(gameTimerMain, 10);
+    }
     soundStop();
     gameTimerStartSound.play();
 });
@@ -504,6 +504,8 @@ $("#now").click(function(){
 
         document.getElementById("blueScore").innerHTML = scoreLeft;
         document.getElementById("yellowScore").innerHTML = scoreRight;
+        document.getElementById("teamNameBlue").innerHTML = blueTeamSetting.value;
+        document.getElementById("teamNameYellow").innerHTML = yellowTeamSetting.value;
     }
     else if(gameModeWord[gameMode] == "後半"){
         var tmp = scoreLeft;
@@ -515,6 +517,8 @@ $("#now").click(function(){
         
         document.getElementById("blueScore").innerHTML = scoreLeft;
         document.getElementById("yellowScore").innerHTML = scoreRight;
+        document.getElementById("teamNameBlue").innerHTML = yellowTeamSetting.value;
+        document.getElementById("teamNameYellow").innerHTML = blueTeamSetting.value;
     }
 });
 
